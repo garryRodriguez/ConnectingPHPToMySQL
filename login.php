@@ -1,41 +1,39 @@
 <?php
+    require_once 'include/db_connect.php';
 /*
 * This is our login.php file that contains
 * important details necessary to connect to
 * our MySQL database
 */
 
-    //Step 1. connect to MySQL database
-    $hostName = 'localhost'; //create a variable name for the web server
-    $databaseName = 'kredoit_db'; //variable for the database name
-    $username = 'root'; //variable for the username
-    $password = ''; //variable for the password
-
-    $conn = new mysqli($hostName, $databaseName, $username, $password);
-    
-    if ($conn -> connect_error) die($conn->connect_error);
-    
-    //step 2. Build and execute/perform the query string
+    //step 2. Build the query string
+    //Step 3 Execute the query.
 
     $query = "SELECT * FROM kredousers";
     $result = $conn->query($query);
-    if(!$result) die($conn-error);
+    if(!$result) die($conn->error);
 
-    //step 3. Fetch the result from the database
+    echo "<h1>Data From MySQL Database</h1>";
+
+    //step 4. Fetch the result from the database
     $rows = $result->num_rows;
     for($i = 0; $i < $rows; ++$i){
-        $result->data_seek($j);
-        echo 'First Name: '. $result->fetch_assoc()['firstName'] . $result-fetch_assoc()['lastName'].'<br>';
-        $result->data_seek($j);
-        echo 'Mobile No: ' . $result-fetch_assoc()['mobileNo'] . '<br>';
-        $result->data_seek($j);
-        echo 'Email: ' . $result-fetch_assoc()['userEmail'] . '<br>';
-        $result->data_seek($j);
-        echo 'Country: ' . $result-fect_assoc()['Country'] . '<br>';
+        $result->data_seek($i);
+        echo 'First Name: '. $result->fetch_assoc()['firstName'] .'<br>';
+        $result->data_seek($i);
+        echo 'Last Name: '. $result->fetch_assoc()['lastName'] .'<br>';
+        $result->data_seek($i);
+        echo 'Mobile No: ' . $result->fetch_assoc()['mobileNo'] . '<br>';
+        $result->data_seek($i);
+        echo 'Email: ' . $result->fetch_assoc()['userEmail'] . '<br>';
+        $result->data_seek($i);
+        echo 'Country: ' . $result->fetch_assoc()['country'] . '<br>';
+        echo '<br>';
     }
 
-    //step 4. Disconnect from MySQL
+    //Step 5. Close the database connection
     $result->close();
+    //step 6. Disconnect from MySQL
     $conn->close();
 
 ?>
